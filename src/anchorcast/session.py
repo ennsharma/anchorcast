@@ -43,6 +43,11 @@ class Session:
     def advance(self, index: int) -> None:
         self.playing_index = max(self.playing_index, index)
 
+    def pump(self) -> StreamEvent | None:
+        if not self._should_generate():
+            return None
+        return self._generate_one()
+
     def run(self, max_segments: int | None = None) -> Iterator[StreamEvent]:
         while True:
             if max_segments is not None and len(self.segments) >= max_segments:
@@ -82,7 +87,7 @@ class Session:
         index = len(self.segments)
         output_path = self.workdir / f"{index:04d}.mp4"
         request = GenerateRequest(
-            prompt=self.character.render_prompt(brief),
+            prompt=self.character.render_prompt(brief, previous=previous),
             image_path=image_path,
             output_path=output_path,
             brief=brief,

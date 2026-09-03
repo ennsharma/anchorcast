@@ -117,6 +117,17 @@ YouTube Live, Twitch, TikTok Live, and Super Chats are a later backend. That lay
 
 Not yet: RTMP output, hosted APIs, or platform chat integrations.
 
+## Example app
+
+`examples/literary_bear` is a continuous 1926 literary-bear news stream (Shepard, not Disney). Each clip is the next fifteen seconds of one monologue, not a fresh "oh bother" cold open.
+
+```bash
+python3.11 -m examples.literary_bear --dry-run   # scripts only
+python3.11 -m examples.literary_bear            # local player at http://127.0.0.1:8765
+```
+
+`--llm` or `OPENAI_API_KEY` writes spoken lines with `gpt-4o-mini`. `--no-llm` forces the rotating templates.
+
 ## Development
 
 ```bash

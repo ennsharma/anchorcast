@@ -6,7 +6,7 @@ This repository is a **Python client** for generative livestreams. It is not a Y
 
 - `src/anchorcast/` — library
 - `tests/` — pytest, no fal network calls
-- `examples/` — optional adapters usage, including a public-domain literary-bear still
+- `examples/` — apps that consume the library, including a literary-bear news stream
 
 ## Architecture
 

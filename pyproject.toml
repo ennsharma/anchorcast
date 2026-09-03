@@ -36,5 +36,5 @@ Repository = "https://github.com/ennsharma/anchorcast"
 Issues = "https://github.com/ennsharma/anchorcast/issues"
 
 [tool.pytest.ini_options]
-pythonpath = ["src"]
+pythonpath = ["src", "."]
 testpaths = ["tests"]

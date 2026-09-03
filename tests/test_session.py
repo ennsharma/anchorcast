@@ -54,6 +54,9 @@ def test_session_fills_buffer_from_queue(tmp_path: Path) -> None:
     assert [event.segment.brief.id for event in events] == ["one", "two"]
     assert len(model.requests) == 2
     assert model.requests[0].image_path == session.character.image
+    assert "continuation" not in model.requests[0].prompt.lower()
+    assert "uninterrupted" in model.requests[1].prompt.lower()
+    assert "do not greet" in model.requests[1].prompt.lower()
 
 
 def test_session_does_not_run_ahead_of_buffer_without_playhead(tmp_path: Path) -> None:
