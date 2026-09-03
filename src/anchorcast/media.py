@@ -22,6 +22,7 @@ def extract_last_frame(video_path: Path, frame_path: Path) -> Path:
         ],
         capture_output=True,
         text=True,
+        check=False,
     )
     if result.returncode != 0 or not frame_path.exists() or frame_path.stat().st_size == 0:
         tail = (result.stderr or "").strip().splitlines()[-1:] or ["ffmpeg failed to extract last frame"]

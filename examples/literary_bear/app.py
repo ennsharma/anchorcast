@@ -15,6 +15,7 @@ from anchorcast import Character, Session
 from anchorcast.continuity import LastFrameContinuity
 from anchorcast.models import H3Max
 
+from examples.literary_bear.prompts import talking_head_prompt
 from examples.literary_bear.source import LiteraryNewsSource
 
 ROOT = Path(__file__).resolve().parent.parent.parent
@@ -166,13 +167,15 @@ def dry_run(feed: str, llm: bool) -> None:
 
 
 def live(feed: str, llm: bool, host: str, port: int) -> None:
+    character = _character()
     session = Session(
         model=H3Max(),
-        character=_character(),
+        character=character,
         source=LiteraryNewsSource(feed, llm=llm),
         workdir=ROOT / ".anchorcast" / "literary-bear",
         continuity=LastFrameContinuity(),
         buffer_clips=2,
+        render_prompt=lambda brief, previous: talking_head_prompt(character, brief, previous),
     )
     state = LiveState(session)
     thread = threading.Thread(target=state.loop, name="director", daemon=True)

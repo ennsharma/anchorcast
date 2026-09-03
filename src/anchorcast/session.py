@@ -11,6 +11,7 @@ from anchorcast.types import (
     GenerateRequest,
     Model,
     Playhead,
+    RenderPrompt,
     Segment,
     Source,
     StreamEvent,
@@ -22,12 +23,13 @@ class Session:
         self,
         *,
         model: Model,
-        character: Character,
         source: Source,
         workdir: Path,
+        character: Character | None = None,
         continuity: Continuity | None = None,
         buffer_clips: int = 2,
         idle: Source | None = None,
+        render_prompt: RenderPrompt | None = None,
     ) -> None:
         self.model = model
         self.character = character
@@ -36,6 +38,7 @@ class Session:
         self.continuity = continuity or IdentityContinuity()
         self.buffer_clips = buffer_clips
         self.idle = idle
+        self.render_prompt = render_prompt
         self.segments: list[Segment] = []
         self.playing_index = -1
         self.workdir.mkdir(parents=True, exist_ok=True)
@@ -78,6 +81,16 @@ class Session:
             return self.idle.next_brief(playhead)
         return None
 
+    def _prompt(self, brief: Brief, previous: Segment | None) -> str:
+        if self.render_prompt is not None:
+            return self.render_prompt(brief, previous)
+        if brief.prompt:
+            return brief.prompt
+        script = brief.script()
+        if script:
+            return script
+        return brief.topic
+
     def _generate_one(self) -> StreamEvent | None:
         brief = self._next_brief()
         if brief is None:
@@ -87,7 +100,7 @@ class Session:
         index = len(self.segments)
         output_path = self.workdir / f"{index:04d}.mp4"
         request = GenerateRequest(
-            prompt=self.character.render_prompt(brief, previous=previous),
+            prompt=self._prompt(brief, previous),
             image_path=image_path,
             output_path=output_path,
             brief=brief,

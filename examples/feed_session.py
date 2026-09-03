@@ -5,6 +5,7 @@ from pathlib import Path
 from anchorcast import Character, FeedSource, IdleSource, Session
 from anchorcast.continuity import LastFrameContinuity
 from anchorcast.models import H3Max
+from examples.literary_bear.prompts import talking_head_prompt
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -28,6 +29,7 @@ def main() -> None:
         workdir=ROOT / ".anchorcast",
         continuity=LastFrameContinuity(),
         buffer_clips=2,
+        render_prompt=lambda brief, previous: talking_head_prompt(character, brief, previous),
     )
     for event in session.run(max_segments=2):
         clip = event.segment

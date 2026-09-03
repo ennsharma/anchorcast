@@ -14,10 +14,11 @@ Keep these boundaries:
 
 | Layer | Owns |
 | --- | --- |
-| `Brief` | What to say next (topic, talking points, citations) |
+| `Brief` | Slot for the next clip (`prompt` and/or talking points, topic, citations, priority) |
+| `Character` | Optional seed still + visual/voice hints |
 | `Model` | `generate(request) -> Segment` |
 | `Source` | `next_brief(playhead) -> Brief \| None` |
-| `Continuity` | Which still starts the next clip |
+| `Continuity` | Optional start still for the next clip |
 | `Session` | Generate-ahead buffer and events |
 
 Do **not** add YouTube, Twitch, TikTok, Stripe, or Super Chat integrations here. Those belong in a later backend that maps platform events into `Brief`s on a `QueueSource`.

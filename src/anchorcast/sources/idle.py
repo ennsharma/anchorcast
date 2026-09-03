@@ -12,7 +12,9 @@ class IdleSource:
             id="idle",
             topic="sitting still",
             talking_points=(
-                "I am only a bear of very little brain, sitting quite still "
-                "and thinking of nothing in particular, which is a pleasant thing to do.",
+                (
+                    "I am only a bear of very little brain, sitting quite still "
+                    "and thinking of nothing in particular, which is a pleasant thing to do."
+                ),
             ),
         )

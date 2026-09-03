@@ -7,6 +7,7 @@ from anchorcast.models.base import GenerateRequest
 from anchorcast.session import Session
 from anchorcast.sources.queue import QueueSource
 from anchorcast.types import Brief, Character, Segment
+from examples.literary_bear.prompts import talking_head_prompt
 
 
 class FakeModel:
@@ -40,20 +41,22 @@ def test_session_fills_buffer_from_queue(tmp_path: Path) -> None:
     source.submit(Brief(id="one", topic="one", talking_points=("First story.",)))
     source.submit(Brief(id="two", topic="two", talking_points=("Second story.",)))
     model = FakeModel()
+    character = _character(tmp_path)
     session = Session(
         model=model,
-        character=_character(tmp_path),
+        character=character,
         source=source,
         workdir=tmp_path / "work",
         continuity=IdentityContinuity(),
         buffer_clips=2,
+        render_prompt=lambda brief, previous: talking_head_prompt(character, brief, previous),
     )
 
     events = list(session.run(max_segments=2))
 
     assert [event.segment.brief.id for event in events] == ["one", "two"]
     assert len(model.requests) == 2
-    assert model.requests[0].image_path == session.character.image
+    assert model.requests[0].image_path == character.image
     assert "continuation" not in model.requests[0].prompt.lower()
     assert "uninterrupted" in model.requests[1].prompt.lower()
     assert "do not greet" in model.requests[1].prompt.lower()
