@@ -94,6 +94,7 @@
       let clips = [];
       let waiting = false;
       let wantSound = false;
+      let bufferTarget = 2;
 
       function clipAt(index) {
         return clips.find((clip) => clip.index === index);
@@ -111,14 +112,21 @@
       async function refresh() {
         const state = await fetch("/api/state").then((r) => r.json());
         clips = state.clips;
-        document.getElementById("status").textContent =
-          `${state.clips.length} clips · buffer ${state.buffer_ahead}/${state.buffer_target}` +
-          (state.generating ? " · generating…" : " · live");
-        if (playingIndex < 0 && clips.length) startClip(clips[0].index);
+        bufferTarget = state.buffer_target || 2;
+        const ready = clips.length >= bufferTarget;
+        document.getElementById("status").textContent = ready
+          ? `${state.clips.length} clips · buffer ${state.buffer_ahead}/${bufferTarget}` +
+            (state.generating ? " · generating…" : " · live")
+          : `Warming — waiting for ${bufferTarget} clips before playing` +
+            (state.generating ? " · generating…" : "");
+        if (playingIndex < 0 && ready) {
+          const start = clips[Math.max(0, clips.length - bufferTarget)].index;
+          startClip(start);
+        }
+        if (playingIndex >= 0) preload(playingIndex + 1);
         if (waiting && clipAt(playingIndex + 1)) {
           waiting = false;
-          active = 1 - active;
-          startClip(playingIndex + 1);
+          playNext();
         }
         heartbeat();
       }
@@ -129,7 +137,7 @@
         playingIndex = index;
         waiting = false;
         const player = players[active];
-        player.src = clip.url;
+        if (!player.src.endsWith(clip.url)) player.src = clip.url;
         player.classList.add("active");
         players[1 - active].classList.remove("active");
         player.muted = !wantSound;
@@ -138,6 +146,17 @@
         document.getElementById("script").textContent = clip.script;
         preload(index + 1);
         heartbeat();
+      }
+
+      function playNext() {
+        const next = playingIndex + 1;
+        if (!clipAt(next)) {
+          waiting = true;
+          document.getElementById("status").textContent = "Waiting for the next clip…";
+          return;
+        }
+        active = 1 - active;
+        startClip(next);
       }
 
       function preload(index) {
@@ -157,23 +176,17 @@
 
       players.forEach((player) => {
         player.addEventListener("ended", () => {
-          if (clipAt(playingIndex + 1)) {
-            active = 1 - active;
-            startClip(playingIndex + 1);
-          } else {
-            waiting = true;
-            document.getElementById("status").textContent = "Waiting for the next clip…";
-          }
+          if (player !== players[active]) return;
+          playNext();
         });
         player.addEventListener("timeupdate", () => {
-          if (player === players[active] && player.duration && player.duration - player.currentTime < 8) {
-            preload(playingIndex + 1);
-          }
+          if (player !== players[active] || !player.duration) return;
+          if (player.duration - player.currentTime < 8) preload(playingIndex + 1);
         });
       });
 
       refresh();
-      setInterval(refresh, 1500);
+      setInterval(refresh, 600);
     </script>
   </body>
 </html>
