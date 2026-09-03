@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `QueueSource`, `FeedSource`, and `IdleSource`
 - `LastFrameContinuity` and `IdentityContinuity`
 - MIT license
+- GitHub Actions CI (pytest, ruff) and tag-triggered PyPI publish
 - `Session.pump()` for live apps
 - Follow-up clips prompt the model to continue the take
 - `examples/literary_bear` continuous news stream with continuing spoken lines
