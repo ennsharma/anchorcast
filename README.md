@@ -65,7 +65,7 @@ A `Brief` is the next beat of the stream. The session asks the source for one, a
 
 | Type | Role |
 | --- | --- |
-| **`Brief`** | Topic, talking points, citations, priority, optional payer |
+| **`Brief`** | Topic, talking points, citations, priority |
 | **`Character`** | Seed still, visual prompt, voice description |
 | **`Model`** | `generate(request) -> Segment`. `H3Max` ships first; swap the adapter to change models |
 | **`Source`** | `next_brief(playhead) -> Brief \| None` |

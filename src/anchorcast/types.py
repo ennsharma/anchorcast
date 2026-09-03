@@ -13,7 +13,6 @@ class Brief:
     citations: tuple[str, ...] = ()
     duration_hint: int = 15
     priority: float = 0.0
-    payer: str | None = None
 
     def script(self) -> str:
         return " ".join(point.strip() for point in self.talking_points if point.strip())

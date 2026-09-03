@@ -16,4 +16,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `LastFrameContinuity` and `IdentityContinuity`
 - MIT license
 
-`Brief` has no paid/unpaid taxonomy. Use `priority` to order the queue; `payer` is optional metadata for the application layer.
+`Brief` has no paid/unpaid taxonomy. Use `priority` to order the queue.
