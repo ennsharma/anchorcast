@@ -31,9 +31,9 @@ dependencies = [
 dev = ["pytest>=8.0", "ruff>=0.9"]
 
 [project.urls]
-Homepage = "https://github.com/ennsharma/anchorcast"
-Repository = "https://github.com/ennsharma/anchorcast"
-Issues = "https://github.com/ennsharma/anchorcast/issues"
+Homepage = "https://github.com/scrollmark/anchorcast"
+Repository = "https://github.com/scrollmark/anchorcast"
+Issues = "https://github.com/scrollmark/anchorcast/issues"
 
 [tool.pytest.ini_options]
 pythonpath = ["src", "."]

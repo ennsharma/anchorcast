@@ -10,7 +10,7 @@ Please **do not** open a public issue for a vulnerability.
 
 Use GitHub's private reporting:
 
-https://github.com/ennsharma/anchorcast/security/advisories/new
+https://github.com/scrollmark/anchorcast/security/advisories/new
 
 Include what you ran, what you expected, and a minimal reproduction if you have one.
 
