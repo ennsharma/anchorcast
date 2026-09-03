@@ -52,7 +52,6 @@ source.submit(
         talking_points=("Why are mortgage rates still so high?",),
         citations=("https://example.com/rates",),
         priority=10,
-        kind="paid",
     )
 )
 
@@ -75,7 +74,7 @@ A `Brief` is the next beat of the stream. The session asks the source for one, a
 
 ### Sources
 
-- **`QueueSource`** — explicit briefs, including paid or Super Chat–shaped ones
+- **`QueueSource`** — explicit briefs, ordered by `priority`
 - **`FeedSource`** — RSS/Atom mapped to cited stories
 - **`IdleSource`** — character bits that make **no news claims**
 

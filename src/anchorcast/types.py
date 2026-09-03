@@ -5,9 +5,6 @@ from pathlib import Path
 from typing import Literal, Protocol
 
 
-BriefKind = Literal["story", "idle", "paid"]
-
-
 @dataclass(frozen=True)
 class Brief:
     id: str
@@ -17,7 +14,6 @@ class Brief:
     duration_hint: int = 15
     priority: float = 0.0
     payer: str | None = None
-    kind: BriefKind = "story"
 
     def script(self) -> str:
         return " ".join(point.strip() for point in self.talking_points if point.strip())

@@ -26,5 +26,4 @@ def test_feed_maps_rss_items_to_cited_briefs(tmp_path: Path) -> None:
     assert brief is not None
     assert brief.topic == "Honey harvest delayed"
     assert brief.citations == ("https://example.com/honey",)
-    assert brief.kind == "story"
     assert source.next_brief() is None

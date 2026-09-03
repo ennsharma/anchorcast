@@ -34,7 +34,6 @@ class FeedSource:
                     topic=title,
                     talking_points=(f"I have just heard that {title.rstrip('.')}.",),
                     citations=(link,) if link else (),
-                    kind="story",
                 )
             )
         return briefs

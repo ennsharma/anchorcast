@@ -15,5 +15,4 @@ class IdleSource:
                 "I am only a bear of very little brain, sitting quite still "
                 "and thinking of nothing in particular, which is a pleasant thing to do.",
             ),
-            kind="idle",
         )

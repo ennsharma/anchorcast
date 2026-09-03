@@ -15,6 +15,5 @@ def test_idle_brief_makes_no_news_claim() -> None:
     )
     brief = IdleSource(character).next_brief()
     assert brief is not None
-    assert brief.kind == "idle"
     assert brief.citations == ()
     assert "arrest" not in brief.script().lower()
