@@ -1,6 +1,11 @@
-node_modules
-.next
-.env
-.env.local
-.vercel
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+dist/
+build/
+.anchorcast/
+.pytest_cache/
+/segments/
+.env*
 .DS_Store
