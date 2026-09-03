@@ -29,7 +29,7 @@ Do **not** let `IdleSource` (or any default source) invent news claims. Idle is 
 - 3.11+
 - Double quotes
 - Type annotations on public functions and dataclasses
-- `gpt-4o-mini` if you add OpenAI calls (none in core today)
+- `gpt-5.6-luna` for OpenAI calls in examples (cheap GPT-5.6 tier)
 
 ## Checks
 

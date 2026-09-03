@@ -17,6 +17,8 @@ FORBIDDEN_OPENERS: tuple[str, ...] = (
     "i must say",
 )
 
+SCRIPT_MODEL = "gpt-5.6-luna"
+
 _OPENINGS: tuple[str, ...] = (
     "Today the world has sent a little news into the wood. {headline}. I shall hold it carefully, like a pot that might spill.",
     "There is news, as there so often is. {headline}. I do not pretend to understand all of it, only to sit with it a moment.",
@@ -85,7 +87,7 @@ def _write_llm(*, headline: str, previous: str, index: int) -> str:
         else "This is the first clip of the take."
     )
     response = client.chat.completions.create(
-        model="gpt-4o-mini",
+        model=SCRIPT_MODEL,
         messages=[
             {
                 "role": "system",
@@ -106,7 +108,7 @@ def _write_llm(*, headline: str, previous: str, index: int) -> str:
                 "content": f"{continuation}\nHeadline: {headline}",
             },
         ],
-        temperature=0.9,
+        reasoning_effort="low",
     )
     text = (response.choices[0].message.content or "").strip().strip('"')
     if not text:

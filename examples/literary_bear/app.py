@@ -195,7 +195,7 @@ def main() -> None:
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--port", type=int, default=8765)
     parser.add_argument("--dry-run", action="store_true", help="Print continuing scripts without calling fal.")
-    parser.add_argument("--llm", action="store_true", help="Write scripts with gpt-4o-mini (needs OPENAI_API_KEY).")
+    parser.add_argument("--llm", action="store_true", help="Write scripts with gpt-5.6-luna (needs OPENAI_API_KEY).")
     parser.add_argument("--no-llm", action="store_true", help="Use rotating templates even if OPENAI_API_KEY is set.")
     args = parser.parse_args()
     llm = False if args.no_llm else (args.llm or bool(os.environ.get("OPENAI_API_KEY")))

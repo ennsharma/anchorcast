@@ -126,7 +126,7 @@ python3.11 -m examples.literary_bear --dry-run   # scripts only
 python3.11 -m examples.literary_bear            # local player at http://127.0.0.1:8765
 ```
 
-`--llm` or `OPENAI_API_KEY` writes spoken lines with `gpt-4o-mini`. `--no-llm` forces the rotating templates.
+`--llm` or `OPENAI_API_KEY` writes spoken lines with `gpt-5.6-luna`. `--no-llm` forces the rotating templates.
 
 ## Development
 
